@@ -1,43 +1,43 @@
-function View(controller) {
+/* jshint esversion:6 */
+function View(controller) {  
 
 	this.createPetHTML = function(pet) {
-		var $button = $("<button>Play Amount:</button>");
-		var $playField = $("<input type='text' id='foodAmount'>");
-		var $button1 = $("<button>Food Amount:</button>");
-		var $feedField = $("<input type='text' id='foodAmount'>"); // not working or breaking it.
-		// var self = this;
-		// $button.click(function() {
-		// 	controller.playWithPet(pet.name, 10);
-		// 	self.showAllPets();
-		// });
 
-		$button.click(function() {
-			controller.playWithPet(pet.name, 10);
+		var $buttonPlay = $("<button>Play</button>");
+		var $buttonFeed = $("<button>Feed</button>");
+		var $inputNumFeed = $("<p>Feed your pet by a certain amount: <input id='numA' type='number'></p>");
+		var $buttonNumFeed = $("<button>Submit Food</button>");
+
+		$buttonPlay.click(function() {
+			controller.playWithPet(pet.name, 5);
 			this.showAllPets();
-		}.bind(this));//what is bind over-riding here?
+		}.bind(this));
 
-		$button1.click(function() {
-			controller.feedPet(pet.name, $feedField);
+		$buttonFeed.click(function() {
+			controller.feedPet(pet.name, 5);
+			this.showAllPets();
+		}.bind(this));
+
+		$buttonNumFeed.click(function() {
+			var num = $("#numA").val();
+			num = parseInt(num);
+			controller.feedPet(pet.name, num);
 			this.showAllPets();
 		}.bind(this));
 
 		var $pet = $("<p>" +
 			pet.name +
-			" : " +
+			" Hunger: " +
 			pet.hunger +
-			" • " +
+			" - Fun: " +
 			pet.fun +
-			" </p>"
+			"</p>"
 		);
-		$pet.append($button);
-		$pet.append($playField);
-		$pet.append($button1);
-		$pet.append($feedField);
+
+		$pet.append($buttonPlay, $buttonFeed, $inputNumFeed, $buttonNumFeed);
 		return $pet;
 	};
-	/*
 
-*/
 	this.showAllPets = function() {
 		$('#output').html("");
 		var allPets = controller.getAllPets();
@@ -47,14 +47,11 @@ function View(controller) {
 		}
 	};
 
-	this.createPet = function() {
+	this.createPet = function() {				// from click listener in main.js
 		var name = $('#petname').val();
-		var food = $('#foodAmount').val();
 		controller.addPet(name);
-		//controller.feedPet(food);// this breaks it
-		$('#petname').val('');
-		$('#foodAmount').val('');
 		this.showAllPets();
-	}
+		$("#petname").val("");
+	};
 
 }

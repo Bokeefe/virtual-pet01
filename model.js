@@ -1,9 +1,11 @@
-function Model() {
-	var pets = [];
+/* jshint esversion:6 */
+function Model() { 
+
+	var pets = []; 
 
 	this.addPet = function(newPet) {
 		pets.push(newPet);
-	}
+	};
 
 	this.getPetByName = function(name) {
 		for(var pet of pets) {
@@ -12,13 +14,23 @@ function Model() {
 			}
 		}
 		return null;
-	}
-
-	this.feedPet = function(food) {
-		//$('#foodField').val('');
-	}
+	};
 
 	this.getAllPets = function() {
 		return pets.slice();
-	}
+	};
+
+	this.petsGetHungry = function() {
+		for (var each of pets) {
+			each.hunger += 1;
+		}
+	};
+
 }
+
+
+
+
+
+
+
